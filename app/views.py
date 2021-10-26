@@ -1,9 +1,9 @@
 from django.shortcuts import render
-
 from .serializer import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
+from rest_framework import status
 
 class CustomerView(APIView):
     def post(self,request):
@@ -18,15 +18,13 @@ class CustomerView(APIView):
                 })
             else:
                 return Response({
-                    'status':'Failure',
                     'message':serializer.errors
-                })
+                },status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             print(e)
             return Response({
-                'status':'Failure',
                 'message':'Something went wrong'
-            })
+            },status=status.HTTP_204_NO_CONTENT)
         
     def get(self,request):
         try:
@@ -40,15 +38,13 @@ class CustomerView(APIView):
                 })
             else:
                 return Response({
-                    'status':'Failure',
                     'message':'Mobile number not found'
-                })
+                },status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             print(e)
             return Response({
-                'status':'Failure',
                 'message':'Something went wrong'
-            })
+            },status=status.HTTP_204_NO_CONTENT)
 
 class LoginView(APIView):
     def post(self,request):
@@ -66,13 +62,11 @@ class LoginView(APIView):
                     })
                 else:
                     return Response({
-                        'status':'Failure',
                         'Message':'Invalid username and password'
-                    })
+                    },status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             print(e)
             return Response({
-                'status':'Failure',
                 'Message':'Something went wrong'
-            })
+            },status=status.HTTP_204_NO_CONTENT)
     
