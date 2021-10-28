@@ -22,8 +22,9 @@ class Customer(models.Model):
     status=models.CharField(max_length=50,choices=(('Aproved','Aproved'),('Reject','Reject')),null=True,blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
-
+    users=models.ForeignKey(User,related_name='users',on_delete=models.CASCADE)
+    
 class Wallet(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    user=models.ForeignKey(User,related_name='wallets',on_delete=models.CASCADE)
     wallet=models.FloatField()
 
