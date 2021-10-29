@@ -19,6 +19,7 @@ class Customer(models.Model):
     amount_paid=models.FloatField()
     customer_pic=models.ImageField(upload_to='customer/image')
     ornament_pic=models.ImageField(upload_to='ornament_pic/image')
+    ornament_type=models.CharField(max_length=100)
     status=models.CharField(max_length=50,choices=(('Aproved','Aproved'),('Reject','Reject')),null=True,blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)

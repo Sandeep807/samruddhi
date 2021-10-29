@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from .serializer import *
+from .models import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 
@@ -111,3 +112,64 @@ class Balance(APIView):
         except Exception as e:
             print(e)
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+class StatusView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAdminUser]
+    def post(self,request):
+        try:
+            #username=request.GET.get('username')
+            stat=request.data
+            serializer=CustomerSerializer1(data=stat)
+            if serializer.is_valid():
+                data=serializer.data['status']
+                obj=Customer.objects.filter(status=data)
+                if obj:
+                    serializer=CustomerSerializer(obj,many=True)
+                    return Response(data=serializer.data,status=status.HTTP_200_OK)
+                else:
+                    return Response({
+                        'Message':'Not found'
+                    },status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            print(e)
+            return Response({
+                'Message':'Something went wrong'
+            },status=status.HTTP_400_BAD_REQUEST)
+
+class AllCustomer(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAdminUser]
+    def get(self,request):
+        try:
+            customer=Customer.objects.all()
+            print(customer)
+            if customer is not None:
+                serializer=CustomerSerializer(customer,many=True)
+                return Response(data=serializer.data,status=status.HTTP_200_OK)
+            else:
+                return Response({'Message':'No data available'},status=status.HTTP_204_NO_CONTENT)
+        except Exception as e:
+            print(e)
+            return Response({
+                'Error':'Something went wrong'
+            },status=status.HTTP_404_NOT_FOUND)
+
+class AllAgent(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAdminUser]
+    def get(self,request):
+        try:
+            user=User.objects.all()
+            if user is not None:
+                serializer=UserSerailizer(user,many=True)
+                return Response(data=serializer.data,status=status.HTTP_200_OK)
+            else:
+                return Response({
+                    'Message':'No data available for agent'
+                },status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            print(e)
+            return Response({
+                'Message':'Something went wrong'
+            },status=status.HTTP_400_BAD_REQUEST)
