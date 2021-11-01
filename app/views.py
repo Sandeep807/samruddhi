@@ -15,33 +15,39 @@ class CustomerView(APIView):
 
     def post(self,request):
         try:
-            id=request.GET.get('username')
-            obj=User.objects.filter(username=id).first()
+            username=request.GET.get('username')
+            obj=User.objects.filter(username=username).first()
+            print(obj)
             wserializer=UserSerailizer(obj)
             wid=wserializer.data['wallets']
-            id=wid[0]['id']
-            amount=float(request.data['amount_paid'])
-            obj1=Wallet.objects.filter(id=id).first()
-            print(obj1)
-            serializer=CustomerSerializer(data=request.data)
-            if serializer.is_valid():
+            if len(wid)>0:
+                id=wid[0]['id']
+                amount=float(request.data['amount_paid'])
+            
+                
+                obj1=Wallet.objects.filter(id=id).first()
+                
+                serializer=CustomerSerializer(data=request.data)
+                if serializer.is_valid():
                     if obj1.wallet>=amount:
-                        obj1.wallet=obj1.wallet-amount
-                        obj1.save()
-                        serializer.save()
-                        return Response({
-                            'status':'Success',
-                            "message":"Data has been saved",
-                            "data":serializer.data
-                        })
+                            obj1.wallet=obj1.wallet-amount
+                            obj1.save()
+                            serializer.save()
+                            return Response({
+                                    'status':'Success',
+                                    "message":"Data has been saved",
+                                    "data":serializer.data
+                                })
                     else:
+                            return Response({
+                                    'message':'Insuficient balance'
+                                },status=status.HTTP_406_NOT_ACCEPTABLE)
+                else:
                         return Response({
-                            'message':'Insuficient balance'
-                        },status=status.HTTP_406_NOT_ACCEPTABLE)
+                            'message':serializer.errors
+                            },status=status.HTTP_400_BAD_REQUEST)
             else:
-                return Response({
-                    'message':serializer.errors
-                    },status=status.HTTP_400_BAD_REQUEST)    
+                return Response({'message':'Amount not found'},status=status.HTTP_404_NOT_FOUND)    
         except Exception as e:
             print(e)
             return Response({

@@ -2,11 +2,20 @@ from django.db import models
 import uuid
 from django.contrib.auth.models import User
 # Create your models here.
+def generate_id():
+    try:
+        obj=Customer.objects.all().last()
+        if obj is not None:
+            return (obj.cus_id)+1
+        else:
+            return 1001
+    except Exception as e:
+        print(e)
 
 class Customer(models.Model):
-    cus_id=models.AutoField(primary_key=True,editable=False)
+    cus_id=models.IntegerField(default=generate_id,primary_key=True,editable=False)
     name=models.CharField(max_length=50)
-    mobile_number=models.CharField(max_length=15)
+    mobile_number=models.CharField(max_length=15,unique=True)
     gross_weight=models.FloatField()
     stone=models.FloatField(default=0)
     net_weight=models.FloatField()
