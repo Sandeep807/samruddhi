@@ -10,10 +10,17 @@ class CustomerAdmin(admin.ModelAdmin):
     list_display=('users','cus_id','name','mobile_number','gross_weight',
                 'stone','net_weight','gold_price','purity',
                 'gross_amount','margin','net_amount','releasing',
-                'amount_paid','customer_pic','ornament_pic','status','created_at')
+                'amount_paid','customer_image','ornament_image','status','created_at')
 
-    list_filter=['status','created_at','users']
+    list_filter=['created_at','users','status',('status',admin.EmptyFieldListFilter)]
     search_fields=['mobile_number']
+    list_per_page=10
+
+    def customer_image(self,obj):
+        return format_html(f'<img src="/media/{obj.customer_pic}" style=height:50px;width:50px>')
+
+    def ornament_image(self,obj):
+        return format_html(f'<img src="/media/{obj.ornament_pic}" style=height:50px;width:50px>')
 
 @admin.register(Wallet)
 class UserWallet(admin.ModelAdmin):

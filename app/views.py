@@ -9,10 +9,14 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 
+
+
+"""This api is used to insert data into table and get data from table"""
+
 class CustomerView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
-
+    
     def post(self,request):
         try:
             username=request.GET.get('username')
@@ -76,6 +80,7 @@ class CustomerView(APIView):
             },status=status.HTTP_204_NO_CONTENT)
 
 
+"""This api used to login and get token a particuler agent"""
 class LoginView(APIView):
     def post(self,request):
         try:
@@ -103,6 +108,7 @@ class LoginView(APIView):
             },status=status.HTTP_204_NO_CONTENT)
     
 
+"""This api is used to get balance a particuler agent remaining balance"""
 class Balance(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -119,6 +125,7 @@ class Balance(APIView):
             print(e)
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+"""This api is used to post into table"""
 class StatusView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAdminUser]
@@ -143,6 +150,8 @@ class StatusView(APIView):
                 'Message':'Something went wrong'
             },status=status.HTTP_400_BAD_REQUEST)
 
+
+"""This api is used to get data all customer"""
 class AllCustomer(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAdminUser]
@@ -161,6 +170,7 @@ class AllCustomer(APIView):
                 'Error':'Something went wrong'
             },status=status.HTTP_404_NOT_FOUND)
 
+"""This api is used to get all agent from table"""
 class AllAgent(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAdminUser]
