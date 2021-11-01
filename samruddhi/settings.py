@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ SECRET_KEY = 'gksid++a873o^istkr=-)__vqsifoxxofg2#g)4uk6z(2fqglh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -87,7 +88,7 @@ WSGI_APPLICATION = 'samruddhi.wsgi.application'
 DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'samruddhi',
+       'NAME': 'samruddhi1',
        'USER': 'postgres',
        'PASSWORD': 'Sandeep@1994',
        'HOST': 'localhost',
@@ -135,7 +136,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 MEDIA_URL='/media/'
-MEDIA_ROOT=BASE_DIR/'media/'
+MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
