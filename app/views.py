@@ -126,24 +126,51 @@ class Balance(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 """This api is used to post into table"""
-class StatusView(APIView):
+class StatusAproved(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAdminUser]
-    def post(self,request):
+    def get(self,request):
         try:
             #username=request.GET.get('username')
-            stat=request.data
-            serializer=CustomerSerializer1(data=stat)
-            if serializer.is_valid():
-                data=serializer.data['status']
-                obj=Customer.objects.filter(status=data)
-                if obj:
-                    serializer=CustomerSerializer(obj,many=True)
-                    return Response(data=serializer.data,status=status.HTTP_200_OK)
-                else:
-                    return Response({
-                        'Message':'Not found'
-                    },status=status.HTTP_404_NOT_FOUND)
+            # stat=request.dat
+            # serializer=CustomerSerializer1(data=stat)
+            # if serializer.is_valid():
+            #     data=serializer.data['status']
+            obj=Customer.objects.filter(status='Aproved')
+            if obj:
+                serializer=CustomerSerializer(obj,many=True)
+                return Response(data=serializer.data,status=status.HTTP_200_OK)
+            else:
+                return Response({
+                    'Message':'Not found'
+                },status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            print(e)
+            return Response({
+                'Message':'Something went wrong'
+            },status=status.HTTP_400_BAD_REQUEST)
+
+
+
+"""This api is used to post into table"""
+class StatusReject(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAdminUser]
+    def get(self,request):
+        try:
+            #username=request.GET.get('username')
+            # stat=request.dat
+            # serializer=CustomerSerializer1(data=stat)
+            # if serializer.is_valid():
+            #     data=serializer.data['status']
+            obj=Customer.objects.filter(status='Reject')
+            if obj:
+                serializer=CustomerSerializer(obj,many=True)
+                return Response(data=serializer.data,status=status.HTTP_200_OK)
+            else:
+                return Response({
+                    'Message':'Not found'
+                },status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             print(e)
             return Response({
