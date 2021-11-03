@@ -32,8 +32,8 @@ class Customer(models.Model):
     net_amount=models.FloatField()
     releasing=models.FloatField()
     amount_paid=models.FloatField()
-    customer_pic=models.ImageField(upload_to='customer/image/',null=True,blank=True)
-    ornament_pic=models.ImageField(upload_to='ornament_pic/image/',null=True,blank=True)
+    customer_pic=models.ImageField(upload_to='customer/image/')
+    ornament_pic=models.ImageField(upload_to='ornament_pic/image/')
     ornament_type=models.CharField(max_length=100)
     status=models.CharField(max_length=50,default='Pending',choices=(('Pending','Pending'),('Aproved','Aproved'),('Reject','Reject')))
     created_at=models.DateTimeField(auto_now_add=True)
@@ -46,4 +46,18 @@ class Wallet(models.Model):
 
     user=models.ForeignKey(User,related_name='wallets',on_delete=models.CASCADE)
     wallet=models.FloatField()
+
+def generate_gold_id():
+    try:
+        obj=GoldPrice.objects.all().last()
+        if obj is not None:
+            return (obj.gold_id)+1
+        else:
+            return 1001
+    except Exception as e:
+        print(e)
+
+class GoldPrice(models.Model):
+    gold_id=models.IntegerField(default=generate_gold_id,primary_key=True,editable=False)
+    price=models.FloatField()
 

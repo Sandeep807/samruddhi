@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 # Register your models here.
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
+    
     list_display=('users','cus_id','name','mobile_number','gross_weight',
                 'stone','net_weight','gold_price','purity',
                 'gross_amount','margin','net_amount','releasing',
@@ -21,13 +22,39 @@ class CustomerAdmin(admin.ModelAdmin):
 
     def ornament_image(self,obj):
         return format_html(f'<img src="/media/{obj.ornament_pic}" style=height:50px;width:50px>')
-
+    
 @admin.register(Wallet)
 class UserWallet(admin.ModelAdmin):
     list_display=('user','wallet','id')
 
-
+@admin.register(GoldPrice)
+class GoldPriceAdmin(admin.ModelAdmin):
+    list_display=['gold_id','price']
+    # fieldsets = (
+    #     ('Customer Details', {
+    #         "fields": (
+    #             'name','mobile_number',
+    #         ),
+    #     }),
     
+    #     ('Gold Details', {
+    #         "fields": (
+    #             'gross_weight','stone',
+    #              'net_weight','gold_price',
+    #              'purity','gross_amount',
+    #              'margin','net_amount',
+    #              'releasing','amount_paid',
+    #         ),
+    #     }),
+    
+    #         ('Customer and Ornament Image', {
+    #         "fields": (
+    #             # 'customer_image',
+    #             #'ornament_image',
+    #              'status',
+    #         ),
+    #     }),
+    # )    
     # def image_tag(self, obj):
     #     return format_html('<img src="{}" />'.format(obj.customer_pic.url))
 

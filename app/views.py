@@ -39,23 +39,23 @@ class CustomerView(APIView):
                             serializer.save()
                             return Response({
                                     'status':'Success',
-                                    "message":"Data has been saved",
+                                    "Message":"Data has been saved",
                                     "data":serializer.data
                                 })
                     else:
                             return Response({
-                                    'message':'Insuficient balance'
+                                    'Message':'Insuficient balance'
                                 },status=status.HTTP_406_NOT_ACCEPTABLE)
                 else:
                         return Response({
-                            'message':serializer.errors
+                            'Message':serializer.errors
                             },status=status.HTTP_400_BAD_REQUEST)
             else:
-                return Response({'message':'Amount not found'},status=status.HTTP_404_NOT_FOUND)    
+                return Response({'Message':'Amount not found'},status=status.HTTP_404_NOT_FOUND)    
         except Exception as e:
             print(e)
             return Response({
-                'message':'Something went wrong'
+                'Message':'Something went wrong'
             },status=status.HTTP_204_NO_CONTENT)
 
 
@@ -71,12 +71,12 @@ class CustomerView(APIView):
                 })
             else:
                 return Response({
-                    'message':'Mobile number not found'
+                    'Message':'Mobile number not found'
                 },status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             print(e)
             return Response({
-                'message':'Something went wrong'
+                'Message':'Something went wrong'
             },status=status.HTTP_204_NO_CONTENT)
 
 
@@ -216,3 +216,20 @@ class AllAgent(APIView):
             return Response({
                 'Message':'Something went wrong'
             },status=status.HTTP_400_BAD_REQUEST)
+
+class GetGoldPrice(APIView):
+    def get(self,request):
+        try:
+            obj=GoldPrice.objects.all()
+            if obj is not None:
+                serializer=GoldPriceSerializer(obj,many=True)
+                return Response(data=serializer.data,status=status.HTTP_200_OK)
+            else:
+                return Response({
+                    'Message':'Gold price not available'
+                },status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            print(e)
+            return Response({
+                'Message':'Something went wrong'
+                },status=status.HTTP_400_BAD_REQUEST)

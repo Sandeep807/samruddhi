@@ -29,3 +29,8 @@ class UserSerailizer(serializers.ModelSerializer):
     class Meta:
         model=User
         fields=['id','first_name','wallets','username']
+
+class GoldPriceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=GoldPrice
+        fields=['price']

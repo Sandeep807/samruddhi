@@ -8,4 +8,5 @@ urlpatterns = [
     path('reject/',StatusReject.as_view()),
     path('allcustomer/',AllCustomer.as_view()),
     path('allagent/',AllAgent.as_view()),
+    path('goldprice/',GetGoldPrice.as_view())
 ]
