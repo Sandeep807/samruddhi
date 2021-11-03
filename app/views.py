@@ -218,6 +218,8 @@ class AllAgent(APIView):
             },status=status.HTTP_400_BAD_REQUEST)
 
 class GetGoldPrice(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self,request):
         try:
             obj=GoldPrice.objects.all()
