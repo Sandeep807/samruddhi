@@ -22,7 +22,29 @@ class CustomerAdmin(admin.ModelAdmin):
 
     def ornament_image(self,obj):
         return format_html(f'<img src="/media/{obj.ornament_pic}" style=height:50px;width:50px>')
-    
+
+@admin.register(ReleaseCustomer)  
+class ReleaseCustomerAdmin(admin.ModelAdmin):
+    list_display=['cus_name','mobile_number','business_type','address','address_image',
+                'proof_image','pledge_slip_image','release_slip_image',
+                'release_amount_image','created_at','updated_at']
+
+    def address_image(self,obj):
+        return format_html(f'<img src="/media/{obj.address_pic}" style=height:50px;width:50px>')
+
+    def proof_image(self,obj):
+        return format_html(f'<img src="/media/{obj.id_proof}" style=height:50px;width:50px>')
+
+    def pledge_slip_image(self,obj):
+        return format_html(f'<img src="/media/{obj.pledge_slip}" style=height:50px;width:50px>')
+
+    def release_slip_image(self,obj):
+        return format_html(f'<img src="/media/{obj.release_slip}" style=height:50px;width:50px>')
+
+    def release_amount_image(self,obj):
+        return format_html(f'<img src="/media/{obj.release_amount}" style=height:50px;width:50px>')
+
+
 @admin.register(Wallet)
 class UserWallet(admin.ModelAdmin):
     list_display=('user','wallet','id')

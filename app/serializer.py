@@ -11,6 +11,11 @@ class CustomerSerializer(serializers.ModelSerializer):
     #     amount=validated_data['amount_paid']
     #     Customer.objects.create(**validated_data)
 
+class ReleaseCustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=ReleaseCustomer
+        exclude=['updated_at']
+
 class CustomerSerializer1(serializers.Serializer):
     status=serializers.CharField(required=True)
 

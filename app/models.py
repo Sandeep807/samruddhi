@@ -22,6 +22,10 @@ class Customer(models.Model):
     cus_id=models.IntegerField(default=generate_id,primary_key=True,editable=False)
     name=models.CharField(max_length=50)
     mobile_number=models.CharField(max_length=15,unique=True)
+    business_type=models.CharField(max_length=100,default='Physical')
+    address=models.TextField()
+    address_proof=models.ImageField(upload_to='customer/address_proof/')
+    id_proof=models.ImageField(upload_to='customer/id_proof/')
     gross_weight=models.FloatField()
     stone=models.FloatField(default=0)
     net_weight=models.FloatField()
@@ -39,7 +43,24 @@ class Customer(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     users=models.ForeignKey(User,related_name='users',on_delete=models.CASCADE)
-    
+
+class ReleaseCustomer(models.Model):
+    cus_name=models.CharField(max_length=50)
+    mobile_number=models.CharField(max_length=15)
+    business_type=models.CharField(max_length=100,default='Release')
+    address=models.TextField()
+    address_pic=models.ImageField(upload_to='release/image/')
+    id_proof=models.ImageField(upload_to='release/id_proof/')
+    pledge_slip=models.ImageField(upload_to='release/slip/')
+    release_slip=models.ImageField(upload_to='release_slip/')
+    release_amount=models.ImageField(upload_to='release_amount/')
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.cus_name
+
+
 class Wallet(models.Model):
 
     """This model is used to store balance of agents"""

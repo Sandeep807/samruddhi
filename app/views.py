@@ -27,10 +27,7 @@ class CustomerView(APIView):
             if len(wid)>0:
                 id=wid[0]['id']
                 amount=float(request.data['amount_paid'])
-            
-                
                 obj1=Wallet.objects.filter(id=id).first()
-                
                 serializer=CustomerSerializer(data=request.data)
                 if serializer.is_valid():
                     if obj1.wallet>=amount:
@@ -73,6 +70,32 @@ class CustomerView(APIView):
                 return Response({
                     'Message':'Mobile number not found'
                 },status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            print(e)
+            return Response({
+                'Message':'Something went wrong'
+            },status=status.HTTP_204_NO_CONTENT)
+
+class CustomerRelease(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def post(self,request):
+        try:
+            username=request.GET.get('username')
+            obj=User.objects.filter(username=username).first()
+            serializer=ReleaseCustomerSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({
+                    'status':'Success',
+                    "Message":"Data has been saved",
+                    "data":serializer.data
+                })
+            else:
+                return Response({
+                    'Message':serializer.errors
+                },status=status.HTTP_400_BAD_REQUEST) 
         except Exception as e:
             print(e)
             return Response({
