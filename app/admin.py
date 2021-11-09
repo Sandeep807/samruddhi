@@ -3,19 +3,25 @@ from django.utils.html import format_html
 admin.site.site_header="Samruddhi"
 admin.site.index_title="Welcome to Samruddhi"
 from .models import *
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 # Register your models here.
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    
     list_display=('users','cus_id','name','mobile_number','business_type','address','address_proof',
-    'id_proof','gross_weight','stone','net_weight','gold_price','purity',
+                'id_proof','gross_weight','stone','net_weight','gold_price','purity',
                 'gross_amount','margin','net_amount','releasing',
                 'amount_paid','customer_image','ornament_image','status','created_at')
 
-    list_filter=['created_at','users','status',('status',admin.EmptyFieldListFilter)]
+    list_filter=['created_at','users','status']
     search_fields=['mobile_number']
     list_per_page=10
+
+    def address_proof_image(self,obj):
+        return format_html(f'<img src="/media/{obj.address_proof}" style=height:50px;width:50px>')
+    
+    def id_proof_image(self,obj):
+        return format_html(f'<img src="/media/{obj.id_proof}" style=height:50px;width:50px>')
+
 
     def customer_image(self,obj):
         return format_html(f'<img src="/media/{obj.customer_pic}" style=height:50px;width:50px>')
@@ -27,7 +33,7 @@ class CustomerAdmin(admin.ModelAdmin):
 class ReleaseCustomerAdmin(admin.ModelAdmin):
     list_display=['cus_name','mobile_number','business_type','address','address_image',
                 'proof_image','pledge_slip_image','release_slip_image',
-                'release_amount_image','created_at','updated_at']
+                'release_amount_image','created_at']
 
     def address_image(self,obj):
         return format_html(f'<img src="/media/{obj.address_pic}" style=height:50px;width:50px>')

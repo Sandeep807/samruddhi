@@ -43,6 +43,8 @@ class Customer(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     users=models.ForeignKey(User,related_name='users',on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name
 
 class ReleaseCustomer(models.Model):
     cus_name=models.CharField(max_length=50)
