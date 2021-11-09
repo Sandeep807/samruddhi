@@ -7,8 +7,8 @@ from .models import *
 # Register your models here.
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display=('users','cus_id','name','mobile_number','business_type','address','address_proof',
-                'id_proof','gross_weight','stone','net_weight','gold_price','purity',
+    list_display=('users','cus_id','name','mobile_number','business_type','address','address_proof_image',
+                'id_proof_image','gross_weight','stone','net_weight','gold_price','purity',
                 'gross_amount','margin','net_amount','releasing',
                 'amount_paid','customer_image','ornament_image','status','created_at')
 
