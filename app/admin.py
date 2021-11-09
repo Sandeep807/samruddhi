@@ -8,8 +8,8 @@ from django.contrib.auth.models import User
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
     
-    list_display=('users','cus_id','name','mobile_number','gross_weight',
-                'stone','net_weight','gold_price','purity',
+    list_display=('users','cus_id','name','mobile_number','business_type','address','address_proof',
+    'id_proof','gross_weight','stone','net_weight','gold_price','purity',
                 'gross_amount','margin','net_amount','releasing',
                 'amount_paid','customer_image','ornament_image','status','created_at')
 
