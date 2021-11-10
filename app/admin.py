@@ -53,7 +53,7 @@ class ReleaseCustomerAdmin(admin.ModelAdmin):
 
 @admin.register(Wallet)
 class UserWallet(admin.ModelAdmin):
-    list_display=('user_id','wallet','id')
+    list_display=('user_id','user_name','wallet','id')
 
 @admin.register(GoldPrice)
 class GoldPriceAdmin(admin.ModelAdmin):

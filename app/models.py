@@ -84,7 +84,8 @@ class Wallet(models.Model):
 
     def user_id(self):
         return self.user.id
-
+    def user_name(self):
+        return self.user.username
 def generate_gold_id():
     try:
         obj=GoldPrice.objects.all().last()
