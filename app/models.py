@@ -47,8 +47,17 @@ class Customer(models.Model):
         return self.name
 
 class ReleaseCustomer(models.Model):
-    cus_name=models.CharField(max_length=50)
-    mobile_number=models.CharField(max_length=15)
+    ornament=models.CharField(max_length=100)
+    gross_weight=models.FloatField()
+    stone_weight=models.FloatField()
+    net_weight=models.FloatField()
+    purity=models.FloatField()
+    gold_price=models.FloatField()
+    gross_amount=models.FloatField()
+    margin=models.FloatField()
+    net_amount=models.FloatField()
+    release_amount1=models.FloatField()
+    paid_amount=models.FloatField()
     business_type=models.CharField(max_length=100,default='Release')
     address=models.TextField()
     address_pic=models.ImageField(upload_to='release/image/')
@@ -59,8 +68,8 @@ class ReleaseCustomer(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return self.cus_name
+    # def __str__(self):
+    #     return self.cus_name
 
 
 class Wallet(models.Model):

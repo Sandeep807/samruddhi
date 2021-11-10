@@ -31,7 +31,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
 @admin.register(ReleaseCustomer)  
 class ReleaseCustomerAdmin(admin.ModelAdmin):
-    list_display=['cus_name','mobile_number','business_type','address','address_image',
+    list_display=['business_type','address','address_image',
                 'proof_image','pledge_slip_image','release_slip_image',
                 'release_amount_image','created_at']
 
