@@ -3,11 +3,11 @@ from django.utils.html import format_html
 admin.site.site_header="Samruddhi"
 admin.site.index_title="Welcome to Samruddhi"
 from .models import *
-#from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 # Register your models here.
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display=('users','cus_id','name','mobile_number','business_type','address','address_proof_image',
+    list_display=('user_id','users','cus_id','name','mobile_number','business_type','address','address_proof_image',
                 'id_proof_image','gross_weight','stone','net_weight','gold_price','purity',
                 'gross_amount','margin','net_amount','releasing',
                 'amount_paid','customer_image','ornament_image','status','created_at')
@@ -53,7 +53,7 @@ class ReleaseCustomerAdmin(admin.ModelAdmin):
 
 @admin.register(Wallet)
 class UserWallet(admin.ModelAdmin):
-    list_display=('user','wallet','id')
+    list_display=('user_id','wallet','id')
 
 @admin.register(GoldPrice)
 class GoldPriceAdmin(admin.ModelAdmin):

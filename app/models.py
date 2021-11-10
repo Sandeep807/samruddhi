@@ -45,6 +45,9 @@ class Customer(models.Model):
     users=models.ForeignKey(User,related_name='users',on_delete=models.CASCADE)
     def __str__(self):
         return self.name
+    
+    def user_id(self):
+        return self.users.id
 
 class ReleaseCustomer(models.Model):
     ornament=models.CharField(max_length=100)
@@ -78,6 +81,9 @@ class Wallet(models.Model):
 
     user=models.ForeignKey(User,related_name='wallets',on_delete=models.CASCADE)
     wallet=models.FloatField()
+
+    def user_id(self):
+        return self.user.id
 
 def generate_gold_id():
     try:
