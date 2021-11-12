@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 class CustomerAdmin(admin.ModelAdmin):
     list_display=('user_id','users','cus_id','name','mobile_number','business_type','address','address_proof_image',
                 'id_proof_image','gross_weight','stone','net_weight','gold_price','purity',
-                'gross_amount','margin','net_amount','releasing',
+                'gross_amount','margin','net_amount',
                 'amount_paid','customer_image','ornament_image','status','created_at')
 
     list_filter=['created_at','users','status']
